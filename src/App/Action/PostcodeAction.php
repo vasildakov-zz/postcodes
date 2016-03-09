@@ -3,6 +3,8 @@
 namespace App\Action;
 
 use App\Entity;
+use App\Validator;
+
 use Doctrine\ORM\EntityManager;
 use Zend\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -31,7 +33,7 @@ class PostcodeAction
     ) {
     	$postcode = $request->getQueryParams()['postcode'];
 
-        $validator = new \App\Validator\PostCode;
+        $validator = new Validator\PostCode;
         if(false === $validator->isValid($postcode)) {
             return new JsonResponse([
                 'status' => 'error',

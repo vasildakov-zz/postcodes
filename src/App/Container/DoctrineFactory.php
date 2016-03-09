@@ -2,6 +2,7 @@
 
 namespace App\Container;
 
+use App\Types\PointType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
@@ -57,7 +58,7 @@ class DoctrineFactory
         $em = EntityManager::create($config['doctrine']['connection']['orm_default'], $doctrine);
 
         // Types
-        Type::addType('point', \App\Types\PointType::class);
+        Type::addType('point', PointType::class);
         $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('point', 'point');
 
         

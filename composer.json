@@ -1,0 +1,57 @@
+{
+    "name": "vasildakov/postcodes",
+    "type": "project",
+    "homepage": "https://github.com/vasildakov/postcodes",
+    "license": "BSD-3-CLAUSE",
+    "authors": [
+        {
+            "name": "Vasil Dakov",
+            "homepage": "https://xtreamwayz.com/"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev",
+            "dev-develop": "1.1-dev"
+        }
+    },
+    "require": {
+        "php": "^5.5 || ^7.0",
+        "roave/security-advisories": "dev-master",
+        "zendframework/zend-expressive": "~1.0.0@rc || ^1.0",
+        "zendframework/zend-expressive-helpers": "^2.0",
+        "zendframework/zend-stdlib": "~2.7",
+        "zendframework/zend-expressive-fastroute": "^1.0",
+        "zendframework/zend-servicemanager": "^2.7.3 || ^3.0",
+        "zendframework/zend-inputfilter": "^2.6",
+        "ocramius/proxy-manager": "^1.0",
+        "doctrine/orm": "^2.5",
+        "psr/log": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.3",
+        "filp/whoops": "^1.1 || ^2.0",
+        "fzaninotto/faker": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AppTest\\": "test/AppTest/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs",
+            "@test"
+        ],
+        "cs": "phpcs",
+        "cs-fix": "phpcbf",
+        "serve": "php -S 0.0.0.0:8080 -t public/ public/index.php",
+        "test": "phpunit"
+    }
+}

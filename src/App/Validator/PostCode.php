@@ -5,7 +5,6 @@ use Zend\Validator\AbstractValidator;
 
 /**
  * UK PostCode Validator
- * 
  * @author Vasil Dakov <vasildakov@gmail.com>
  */
 

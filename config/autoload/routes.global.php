@@ -5,6 +5,7 @@ return [
         'invokables' => [
             Zend\Expressive\Router\RouterInterface::class => Zend\Expressive\Router\FastRouteRouter::class,
             App\Action\PingAction::class => App\Action\PingAction::class,
+            App\Action\ErrorAction::class => App\Action\ErrorAction::class,
         ],
         'factories' => [
             App\Action\HomePageAction::class => App\Action\HomePageFactory::class,
@@ -28,7 +29,10 @@ return [
         [
             'name' => 'api.postcode',
             'path' => '/api/postcode',
-            'middleware' => App\Action\PostcodeAction::class,
+            'middleware' => [
+                App\Action\PostcodeAction::class, 
+                App\Action\ErrorAction::class
+            ],
             'allowed_methods' => ['GET'],
         ],
     ],

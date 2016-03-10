@@ -3,52 +3,66 @@
 namespace App\Action;
 
 use App\Entity;
-use App\Validator;
+use Zend\InputFilter\InputFilter;
+use Doctrine\ORM\EntityRepository;
 
-use Doctrine\ORM\EntityManager;
 use Zend\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 class PostcodeAction
 {
     /**
-     * @var EntityManager $container
+     * @var EntityRepository $repository
      */
-    private $em;
+    private $repository;
+
+    /**
+     * @var InputFilter $filter
+     */
+    private $filter;
 
 
     /**
-     * @param ContainerInterface $container
+     * @param EntityRepository $repository
+     * @param InputFilter      $filter
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityRepository $repository, InputFilter $filter)
     {
-        $this->em   = $em;
+        $this->repository = $repository;
+        $this->filter     = $filter;
     }
 
-    public function __invoke(
-    	ServerRequestInterface $request, 
-    	ResponseInterface $response, 
-    	callable $next = null
-    ) {
-    	$postcode = $request->getQueryParams()['postcode'];
 
-        $validator = new Validator\PostCode;
-        if(false === $validator->isValid($postcode)) {
+    /**
+     * @param  RequestInterface  $request
+     * @param  ResponseInterface $response
+     * @param  callable|null     $next
+     * @return $next
+     */
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    {
+        $params = $request->getQueryParams();
+
+        $this->filter->setData($params);
+        if(!$this->filter->isValid()) {
             return new JsonResponse([
                 'status' => 'error',
-                'message' => $validator->getMessages()['error']
+                'messages' => $this->filter->getMessages()
             ]);
         }
 
-        $repository = $this->em->getRepository(Entity\Postcode::class);
-        $entity = $repository->findOneBy(['postcode' => $postcode]);
+        $postcode = $this->filter->getValue('postcode');
+        $entity = $this->repository->findOneByPostcode($postcode);
 
         if($entity instanceof Entity\Postcode) {
             return new JsonResponse([
-                'postcode'  => $entity->getPostcode(),
-                'latitude'  => (float)$entity->getLatitude(),
-                'longitude' => (float)$entity->getLongitude(),
+                'status' => 'success',
+                'data' => [
+                    'postcode'  => $entity->getPostcode(),
+                    'latitude'  => (float)$entity->getLatitude(),
+                    'longitude' => (float)$entity->getLongitude(),
+                ]
             ]);
         }
 

@@ -13,6 +13,7 @@ return [
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
             Doctrine\Common\Cache\Cache::class => App\Container\DoctrineRedisCacheFactory::class,
             Doctrine\ORM\EntityManager::class  => App\Container\DoctrineFactory::class,
+            App\Filter\Postcode::class         => App\Filter\PostcodeFactory::class,
         ],
     ],
 ];

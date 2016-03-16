@@ -26,7 +26,7 @@
         "doctrine/orm": "^2.5",
         "psr/log": "^1.0",
         "guzzlehttp/guzzle": "^6.1",
-        "vasildakov/postcode": "1.0.4"
+        "vasildakov/postcode": "^1.0.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",

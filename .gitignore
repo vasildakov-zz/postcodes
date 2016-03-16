@@ -1,3 +1,5 @@
 .~lock.*
 *.php~
 vendor/*
+.phpintel/
+composer.lock

@@ -1,7 +1,7 @@
 # postcodes
 Postcode &amp; Geolocation API for the UK
 
-[![Build Status](https://travis-ci.org/vasildakov/postcodes.svg?branch=develop)](https://travis-ci.org/vasildakov/postcodes)
+[![Build Status](https://travis-ci.org/vasildakov/postcodes.svg?branch={{branch}})](https://travis-ci.org/vasildakov/postcodes)
 
 ## Generate Doctrine entities, repositories and proxies
 php vendor/bin/doctrine orm:generate:entities src

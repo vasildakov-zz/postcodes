@@ -5,13 +5,12 @@ namespace App\Middleware\Authentication;
 use App\Entity;
 use Interop\Container\ContainerInterface;
 use App\Middleware\Authentication\Authentication;
-use App\Middleware\Authentication\Adapter;
 
 class AuthenticationFactory
 {
     /**
      * @param  ContainerInterface $container
-     * @return HeaderAuthentication
+     * @return Authentication
      */
     public function __invoke(ContainerInterface $container)
     {

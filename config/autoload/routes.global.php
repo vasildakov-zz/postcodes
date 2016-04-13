@@ -4,15 +4,19 @@ return [
     'dependencies' => [
         'invokables' => [
             Zend\Expressive\Router\RouterInterface::class => Zend\Expressive\Router\FastRouteRouter::class,
-            App\Action\PingAction::class => App\Action\PingAction::class,
-            App\Action\ErrorAction::class => App\Action\ErrorAction::class,
-            App\Action\ValidateAction::class => App\Action\ValidateAction::class,
+            App\Action\PingAction::class         => App\Action\PingAction::class,
+            App\Action\ErrorAction::class        => App\Action\ErrorAction::class,
+            App\Action\ValidateAction::class     => App\Action\ValidateAction::class,
+            App\Action\Authentication::class     => App\Action\Authentication::class
         ],
         'factories' => [
             App\Action\HomePageAction::class     => App\Action\HomePageFactory::class,
             App\Action\LookupAction::class       => App\Action\LookupFactory::class,
             App\Action\AutocompleteAction::class => App\Action\AutocompleteFactory::class,
             App\Action\RandomAction::class       => App\Action\RandomFactory::class,
+
+            App\Middleware\Authentication\Adapter::class => App\Middleware\Authentication\AdapterFactory::class,
+            App\Middleware\Authentication\Authentication::class => App\Middleware\Authentication\AuthenticationFactory::class,
         ],
     ],
 

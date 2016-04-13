@@ -19,18 +19,13 @@ class ValidateAction
         $value = \preg_replace('/\s+/', '', \urldecode($value));
 
         $postcode = new Postcode($value);
-
     	if($postcode->valid()) {
-            $postcode = new Postcode($value);
             return new JsonResponse([
                 'status' => 200,
                 'result' => true
             ]);
     	}
 
-        return new JsonResponse([
-            'status' => 404,
-            'error' => "Postcode not found"
-        ]);
+        return $next($request, $response);
     }
 }

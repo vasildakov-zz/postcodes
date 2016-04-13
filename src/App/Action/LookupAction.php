@@ -39,7 +39,7 @@ class LookupAction
      * @param  RequestInterface  $request
      * @param  ResponseInterface $response
      * @param  callable|null     $next
-     * @return $next
+     * @return callable $next
      */
     public function __invoke(
         RequestInterface $request,
@@ -60,8 +60,8 @@ class LookupAction
                     'postcode'  => $entity->getPostcode(),
                     'latitude'  => (double)$entity->getLatitude(),
                     'longitude' => (double)$entity->getLongitude(),
-                    'incode'    => null,
-                    'outcode'   => null,
+                    'incode'    => $postcode->incode(),
+                    'outcode'   => $postcode->outcode(),
                 ]
             ]);
         }

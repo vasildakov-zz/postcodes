@@ -27,7 +27,7 @@ class AutocompleteAction
      * @param  RequestInterface  $request
      * @param  ResponseInterface $response
      * @param  callable|null     $next
-     * @return [type]
+     * @return callable $next
      */
     public function __invoke(
         RequestInterface $request,

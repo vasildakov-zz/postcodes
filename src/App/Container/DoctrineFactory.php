@@ -3,21 +3,29 @@
 namespace App\Container;
 
 use App\Types\PointType;
+
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Cache\Cache;
+
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
+
 use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 
 class DoctrineFactory
 {
     public function __invoke(ContainerInterface $container)
     {
         $config = $container->has('config') ? $container->get('config') : [];
+
+        if (!isset($config['doctrine']['orm'])) {
+            throw new ServiceNotCreatedException('Missing Doctrine configuration');
+        }
 
         $proxyDir = (isset($config['doctrine']['orm']['proxy_dir'])) ?
             $config['doctrine']['orm']['proxy_dir'] : 'data/cache/EntityProxy';
@@ -61,7 +69,6 @@ class DoctrineFactory
         Type::addType('point', PointType::class);
         $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('point', 'point');
 
-        
         return $em;
     }
 }

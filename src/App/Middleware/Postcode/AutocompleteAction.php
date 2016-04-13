@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Middleware\Postcode;
 
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Json\Json;
@@ -29,11 +29,8 @@ class AutocompleteAction
      * @param  callable|null     $next
      * @return callable $next
      */
-    public function __invoke(
-        RequestInterface $request,
-        ResponseInterface $response,
-        callable $next = null
-    ) {
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    {
         $data = [];
 
         $postcode = $request->getAttribute('postcode');

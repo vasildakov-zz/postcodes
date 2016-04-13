@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Action;
+namespace App\Middleware\Postcode;
 
-use App\Entity\Postcode;
+use App\Entity;
+use VasilDakov\Postcode;
+
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Json\Json;
 use Psr\Http\Message\ResponseInterface;
@@ -30,22 +32,21 @@ class RandomAction
      * @param  callable|null     $next
      * @return [type]
      */
-    public function __invoke(
-        RequestInterface $request,
-        ResponseInterface $response,
-        callable $next = null
-    ) {
-
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    {
         $entity = $this->repository->random();
 
-        if($entity instanceof Entity\Postcode) {
+        if ($entity instanceof Entity\Postcode) {
+            $postcode = new Postcode\Postcode($entity->getPostcode());
+
             $data = [
-                'postcode' => $entity->getPostcode(),
+                'postcode' => $postcode->normalise(),
+                'outcode'  => $postcode->outcode(),
+                'incode'   => $postcode->incode(),
                 'latitude' => (double)$entity->getLatitude(),
                 'longitude'=> (double)$entity->getLongitude(),
-                "incode"   => null,
-                "outcode"  => null,
             ];
+
             return new JsonResponse([
                 'status' => 200, 'result' => $data
             ]);

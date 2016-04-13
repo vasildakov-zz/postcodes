@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Middleware\Postcode;
 
 use App\Entity;
 use Interop\Container\ContainerInterface;

@@ -58,6 +58,10 @@ class Postcode extends EntityRepository
     }
 
 
+    /**
+     * Returns random postcode
+     * @return [type] [description]
+     */
     public function random()
     {
         $amount = 1;

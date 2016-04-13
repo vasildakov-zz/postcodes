@@ -15,6 +15,7 @@ return [
             'middleware' => [
                 App\Middleware\Authentication\Authentication::class
             ],
+            'priority' => 1,
         ],
         'always' => [
             'middleware' => [

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Action;
+namespace App\Middleware\Postcode;
 
 use App\Entity;
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
+use Doctrine\ORM\EntityManager;
 
 class AutocompleteFactory
 {
@@ -14,7 +15,7 @@ class AutocompleteFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $em = $container->get('Doctrine\ORM\EntityManager');
+        $em = $container->get(EntityManager::class);
         $repository = $em->getRepository(Entity\Postcode::class);
 
         return new AutocompleteAction($repository);

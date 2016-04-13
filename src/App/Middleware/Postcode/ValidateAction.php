@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Middleware\Postcode;
 
 use Zend\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -10,11 +10,8 @@ use VasilDakov\Postcode\Postcode;
 
 class ValidateAction
 {
-    public function __invoke(
-        RequestInterface $request,
-        ResponseInterface $response,
-        callable $next = null
-    ) {
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    {
     	$value = $request->getAttribute('postcode');
         $value = \preg_replace('/\s+/', '', \urldecode($value));
 

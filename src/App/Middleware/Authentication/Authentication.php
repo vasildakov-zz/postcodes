@@ -22,16 +22,18 @@ class Authentication
         $this->repository = $repository;
     }
 
-
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next = null
-    ) {
+    /**
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface      $response
+     * @param  callable|null          $next
+     */
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
+    {
         if ($request->hasHeader('Authorization')) {
             $key = $request->getHeaderLine('Authorization');
 
-            if($this->repository->findOneByKey($key)) {
+            $entity = $this->repository->findOneBy(['key' => $key]);
+            if($entity) {
                 return $next($request, $response);
             }
         }

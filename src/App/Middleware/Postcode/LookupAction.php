@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action;
+namespace App\Middleware\Postcode;
 
 use App\Entity;
 use VasilDakov\Postcode;
@@ -41,12 +41,11 @@ class LookupAction
      * @param  callable|null     $next
      * @return callable $next
      */
-    public function __invoke(
-        RequestInterface $request,
-        ResponseInterface $response,
-        callable $next = null
-    ){
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    {
         $value = $request->getAttribute('postcode');
+        $value = \preg_replace('/\s+/', '', \urldecode($value));
+
         $postcode = new Postcode\Postcode($value);
 
         $entity = $this->repository->findOneBy([
@@ -58,10 +57,11 @@ class LookupAction
                 'status' => 200,
                 'data' => [
                     'postcode'  => $entity->getPostcode(),
+                    'outcode'   => $postcode->outcode(),
+                    'incode'    => $postcode->incode(),
                     'latitude'  => (double)$entity->getLatitude(),
                     'longitude' => (double)$entity->getLongitude(),
-                    'incode'    => $postcode->incode(),
-                    'outcode'   => $postcode->outcode(),
+
                 ]
             ]);
         }

@@ -3,3 +3,4 @@
 vendor/*
 .phpintel/
 composer.lock
+node_modules

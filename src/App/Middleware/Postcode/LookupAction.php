@@ -8,8 +8,8 @@ use Zend\InputFilter\InputFilter;
 use Doctrine\ORM\EntityRepository;
 
 use Zend\Diactoros\Response\JsonResponse;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\RequestInterface as Request;
 
 class LookupAction
 {
@@ -25,8 +25,9 @@ class LookupAction
 
 
     /**
-     * @param EntityRepository $repository
-     * @param InputFilter      $filter
+     * @TODO The validation input filter must be implemented as a middleware
+     * @param EntityRepository      $repository
+     * @param InputFilter           $filter
      */
     public function __construct(EntityRepository $repository, InputFilter $filter)
     {
@@ -41,16 +42,18 @@ class LookupAction
      * @param  callable|null     $next
      * @return callable $next
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    public function __invoke(Request $request, Response $response, callable $next = null)
     {
         $value = $request->getAttribute('postcode');
         $value = \preg_replace('/\s+/', '', \urldecode($value));
 
         $postcode = new Postcode\Postcode($value);
 
-        $entity = $this->repository->findOneBy([
-            'postcode' => $postcode->normalise()
-        ]);
+        $entity = $this->repository->findOneBy(
+            [
+                'postcode' => $postcode->normalise()
+            ]
+        );
 
         if ($entity instanceof Entity\Postcode) {
             return new JsonResponse([
@@ -63,6 +66,11 @@ class LookupAction
                     'longitude' => (double)$entity->getLongitude(),
 
                 ]
+            ],
+            200, [
+                "Access-Control-Allow-Origin" => "*",
+                "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE"
+
             ]);
         }
 

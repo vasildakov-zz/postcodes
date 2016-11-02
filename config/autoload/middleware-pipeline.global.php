@@ -7,13 +7,15 @@ return [
         'factories' => [
             Helper\ServerUrlMiddleware::class => Helper\ServerUrlMiddlewareFactory::class,
             Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
+
+            App\Middleware\Logger\DebugLogger::class => App\Middleware\Logger\DebugLoggerFactory::class,
         ],
     ],
     // This can be used to seed pre- and/or post-routing middleware
     'middleware_pipeline' => [
         'before' => [
             'middleware' => [
-                App\Middleware\Authentication\Authentication::class
+                //
             ],
             'priority' => 1,
         ],
@@ -28,11 +30,12 @@ return [
             ],
             'priority' => 10000,
         ],
-
         'routing' => [
             'middleware' => [
                 ApplicationFactory::ROUTING_MIDDLEWARE,
                 Helper\UrlHelperMiddleware::class,
+
+                //App\Middleware\Logger\DebugLogger::class,
                 // Add more middleware here that needs to introspect the routing
                 // results; this might include:
                 // - route-based authentication
@@ -42,10 +45,17 @@ return [
             ],
             'priority' => 1,
         ],
-
+        'api' => [
+            'path' => '/api',
+            'middleware' => [
+                App\Middleware\Authentication\Authentication::class,
+            ],
+            'priority' => 100,
+        ],
         'error' => [
             'middleware' => [
                 // Add error middleware here.
+                // App\Middleware\Logger\DebugLogger::class,
             ],
             'error'    => true,
             'priority' => -10000,

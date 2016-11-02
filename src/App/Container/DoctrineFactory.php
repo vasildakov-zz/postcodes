@@ -57,17 +57,17 @@ class DoctrineFactory
         $doctrine->setMetadataDriverImpl($driver);
 
         // Cache
-        $cache = $container->get(Cache::class);
-        $doctrine->setQueryCacheImpl($cache);
-        $doctrine->setResultCacheImpl($cache);
-        $doctrine->setMetadataCacheImpl($cache);
+        //$cache = $container->get(Cache::class);
+        //$doctrine->setQueryCacheImpl($cache);
+        //$doctrine->setResultCacheImpl($cache);
+        //$doctrine->setMetadataCacheImpl($cache);
 
         // EntityManager
         $em = EntityManager::create($config['doctrine']['connection']['orm_default'], $doctrine);
 
         // Types
-        Type::addType('point', PointType::class);
-        $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('point', 'point');
+        //Type::addType('point', PointType::class);
+        //$em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('point', 'point');
 
         return $em;
     }

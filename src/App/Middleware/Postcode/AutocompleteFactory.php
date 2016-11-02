@@ -5,6 +5,7 @@ namespace App\Middleware\Postcode;
 use App\Entity;
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
+use Zend\EventManager\EventManager;
 use Doctrine\ORM\EntityManager;
 
 class AutocompleteFactory

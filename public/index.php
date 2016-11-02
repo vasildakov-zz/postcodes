@@ -14,5 +14,20 @@ require 'vendor/autoload.php';
 $container = require 'config/container.php';
 
 /** @var \Zend\Expressive\Application $app */
-$app = $container->get('Zend\Expressive\Application');
+$app = $container->get(Zend\Expressive\Application::class);
+
+/** @var \Zend\EventManager\EventManager $evm */
+$evm = $container->get(Zend\EventManager\EventManager::class);
+
+// attach listeners to the event manager
+/*$evm->attach(\App\Listener\Aggregate::class, function($e) {
+    var_dump($e);
+});*/
+
+/* $evm->attach('do', function ($app) {
+    var_dump($app); exit('here');
+});
+
+$evm->trigger('do', null, $app); */
+
 $app->run();

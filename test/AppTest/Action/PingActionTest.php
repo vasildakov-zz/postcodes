@@ -20,5 +20,3 @@ class PingActionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($json->ack));
     }
 }
-
-

@@ -1,4 +1,5 @@
 <?php
+//use Zend\Diactoros\Response\JsonResponse;
 
 // Delegate static file requests back to the PHP built-in webserver
 if (php_sapi_name() === 'cli-server'
@@ -14,20 +15,25 @@ require 'vendor/autoload.php';
 $container = require 'config/container.php';
 
 /** @var \Zend\Expressive\Application $app */
-$app = $container->get(Zend\Expressive\Application::class);
+$app = $container->get(\Zend\Expressive\Application::class);
 
-/** @var \Zend\EventManager\EventManager $evm */
-$evm = $container->get(Zend\EventManager\EventManager::class);
+/* $app->get('/api/postcodes/:postcode', function ($request, $response, $next) {
 
-// attach listeners to the event manager
-/*$evm->attach(\App\Listener\Aggregate::class, function($e) {
-    var_dump($e);
-});*/
+    return new JsonResponse([
+        'status' => 200,
+        'data' => [
+            'postcode'  => 'TW8 8FB',
+            'outcode'   => 'TW8',
+            'incode'    => '8FB',
+            'latitude'  => 51.483954952877600,
+            'longitude' => -0.312577856018865,
+        ]
+    ], 200, [
+        "Access-Control-Allow-Origin" => "*",
+        "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE"
 
-/* $evm->attach('do', function ($app) {
-    var_dump($app); exit('here');
-});
+    ]);
 
-$evm->trigger('do', null, $app); */
+}); */
 
 $app->run();

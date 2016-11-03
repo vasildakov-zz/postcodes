@@ -12,16 +12,16 @@ class ValidateAction
 {
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-    	$value = $request->getAttribute('postcode');
+        $value = $request->getAttribute('postcode');
         $value = \preg_replace('/\s+/', '', \urldecode($value));
 
         $postcode = new Postcode($value);
-    	if($postcode->valid()) {
+        if ($postcode->valid()) {
             return new JsonResponse([
                 'status' => 200,
                 'result' => true
             ]);
-    	}
+        }
 
         return $next($request, $response);
     }

@@ -29,6 +29,7 @@ class LookupAction
      * @param EntityRepository      $repository
      * @param InputFilter           $filter
      */
+    //public function __construct(EntityRepository $repository, InputFilter $filter)
     public function __construct(EntityRepository $repository, InputFilter $filter)
     {
         $this->repository = $repository;
@@ -44,6 +45,7 @@ class LookupAction
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
+        exit('here');
         $value = $request->getAttribute('postcode');
         $value = \preg_replace('/\s+/', '', \urldecode($value));
 
@@ -66,8 +68,7 @@ class LookupAction
                     'longitude' => (double)$entity->getLongitude(),
 
                 ]
-            ],
-            200, [
+            ], 200, [
                 "Access-Control-Allow-Origin" => "*",
                 "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE"
 

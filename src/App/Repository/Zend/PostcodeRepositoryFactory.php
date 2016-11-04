@@ -6,17 +6,24 @@ use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
+use Zend\Db\Adapter\AdapterInterface;
+use Zend\Hydrator\Reflection;
+use Zend\ServiceManager\Factory\FactoryInterface;
+
+use App\Entity\Postcode;
+
 class PostcodeRepositoryFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $adapter = new \Zend\Db\Adapter\Adapter([
-            'driver'   => 'Pdo_Mysql',
-            'database' => 'postcodes',
-            'username' => 'root',
-            'password' => '1',
-        ]);
+        $config = $container->get('config');
 
-        return new PostcodeRepository($adapter);
+        if (!array_key_exists('db', $config)) {
+            throw new \Exception("Database is not configured");
+        }
+
+        $adapter = new \Zend\Db\Adapter\Adapter($config['db']);
+
+        return new PostcodeRepository($adapter, new Reflection, new Postcode);
     }
 }

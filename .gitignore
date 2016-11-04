@@ -1,6 +1,7 @@
 .~lock.*
 *.php~
 vendor/*
+build/*
 .phpintel/
 composer.lock
 node_modules

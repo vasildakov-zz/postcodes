@@ -7,10 +7,10 @@ use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 use Zend\Db\Adapter\AdapterInterface;
-use Zend\Hydrator\Reflection;
+use Zend\Hydrator\Reflection as Hydrator;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-use App\Entity\Postcode;
+use App\Entity\Postcode as Entity;
 
 class PostcodeRepositoryFactory
 {
@@ -24,6 +24,6 @@ class PostcodeRepositoryFactory
 
         $adapter = new \Zend\Db\Adapter\Adapter($config['db']);
 
-        return new PostcodeRepository($adapter, new Reflection, new Postcode);
+        return new PostcodeRepository($adapter, new Hydrator, new Entity);
     }
 }

@@ -50,7 +50,7 @@ class PostcodeRepository implements PostcodeRepositoryInterface
             ));
         }
 
-        $resultSet = new HydratingResultSet($this->hydrator, new \App\Entity\Postcode);
+        $resultSet = new HydratingResultSet($this->hydrator, $this->postcode);
         $resultSet->initialize($result);
         $postcode = $resultSet->current();
 

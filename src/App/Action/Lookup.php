@@ -2,12 +2,13 @@
 
 namespace App\Action;
 
-use Zend\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Stratigility\MiddlewareInterface;
 use App\Repository\PostcodeRepositoryInterface;
 
-class Lookup
+class Lookup implements MiddlewareInterface
 {
     /**
      * Constructor

@@ -1,10 +1,8 @@
 <?php
 namespace App\Entity;
 
-
-class Postcode implements \JsonSerializable
+class Postcode implements PostcodeInterface, \JsonSerializable
 {
-
     /**
      * @var integer
      */

@@ -1,6 +1,9 @@
 <?php
 namespace App\Entity;
 
+/**
+ * Class Postcode
+ */
 class Postcode implements PostcodeInterface, \JsonSerializable
 {
     /**
@@ -120,6 +123,21 @@ class Postcode implements PostcodeInterface, \JsonSerializable
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+
+    public function exchangeArray($data)
+    {
+        $this->id        = (isset($data['id']))        ? $data['id']        : null;
+        $this->postcode  = (isset($data['postcode']))  ? $data['postcode']  : null;
+        $this->latitude  = (isset($data['latitude']))  ? $data['latitude']  : null;
+        $this->longitude = (isset($data['longitude'])) ? $data['longitude'] : null;
+    }
+
+
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 
 

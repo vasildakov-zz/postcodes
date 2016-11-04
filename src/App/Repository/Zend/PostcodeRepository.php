@@ -6,34 +6,54 @@ use Zend\Hydrator\HydratorInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Db\Sql\Sql;
 
-use App\Entity\Postcode;
+use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Where;
+
+use Zend\Db\TableGateway\TableGateway;
+
+use App\Entity\PostcodeInterface;
 use App\Repository\PostcodeRepositoryInterface;
 
-class PostcodeRepository implements PostcodeRepositoryInterface
+final class PostcodeRepository implements PostcodeRepositoryInterface
 {
     /**
-     * @param AdapterInterface  $adapter
-     * @param HydratorInterface $hydrator
-     * @param Postcode          $postcode
+     * Constructor
+     *
+     * @param TableGateway
      */
-    public function __construct(
-        AdapterInterface $adapter,
-        HydratorInterface $hydrator,
-        Postcode $postcode
-    ) {
-        $this->adapter  = $adapter;
-        $this->hydrator = $hydrator;
-        $this->postcode = $postcode;
+    public function __construct(TableGateway $gateway)
+    {
+        $this->gateway = $gateway;
     }
 
+
     /**
-     * lookup
-     * @param  String $postcode
+     * Find one by postcode
+     *
+     * @param  String   $postcode
      * @return Postcode $postcode
      */
-    public function lookup($postcode)
+    public function lookup(string $postcode)
+    {
+        /*
+        $select = new Select();
+        $select->from('postcode');
+        $select->where(new Where());
+        $select->columns(array('postcode'));
+        $select->limit(1);
+        $rowset = $this->gateway->select($select);
+        */
+
+        $rowset = $this->gateway->select(['postcode' => $postcode]);
+        //var_dump($rowset->current()); exit();
+        return $rowset->current();
+    }
+
+
+
+
+    public function findUsingSql()
     {
         $sql = new Sql($this->adapter);
 
@@ -55,16 +75,5 @@ class PostcodeRepository implements PostcodeRepositoryInterface
         $postcode = $resultSet->current();
 
         return $postcode;
-
-        // var_dump( $postcode); exit();
-
-
-        /* return [
-            'postcode'  => 'TW8 8FB',
-            'outcode'   => 'TW8',
-            'incode'    => '8FB',
-            'latitude'  => 51.483954952877600,
-            'longitude' => -0.312577856018865,
-        ]; */
     }
 }

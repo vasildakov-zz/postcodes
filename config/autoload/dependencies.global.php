@@ -20,6 +20,9 @@ return [
             Application::class => ApplicationFactory::class,
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
 
+            //Zend\Db\Adapter\AdapterInterface::class => App\Container\Zend\Db\AdapterFactory::class,
+            //Zend\Db\Adapter\Sql\Sql::class => App\Container\Zend\Db\SqlFactory::class,
+
             App\Repository\PostcodeRepositoryInterface::class => App\Repository\Zend\PostcodeRepositoryFactory::class,
         ],
     ],

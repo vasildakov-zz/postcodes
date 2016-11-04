@@ -4,5 +4,5 @@ namespace App\Repository;
 
 interface PostcodeRepositoryInterface
 {
-    public function lookup($postcode);
+    public function lookup(string $postcode);
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace AppTest\Action;
+namespace ApplicationTest\Action;
 
-use App\Action\HomePageAction;
-use App\Action\HomePageFactory;
+use Application\Action\HomePageAction;
+use Application\Action\HomePageFactory;
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;

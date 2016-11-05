@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Action;
+namespace Application\Action;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Stratigility\MiddlewareInterface;
-use App\Repository\PostcodeRepositoryInterface;
+
+use Domain\Repository\PostcodeRepositoryInterface;
 
 class Lookup implements MiddlewareInterface
 {
@@ -28,10 +29,11 @@ class Lookup implements MiddlewareInterface
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
+        
         $postcode = $request->getAttribute('postcode');
-
+        
         $data = $this->repository->lookup($postcode);
-
+        
         return new JsonResponse([
             'status' => 200,
             'data' => $data,

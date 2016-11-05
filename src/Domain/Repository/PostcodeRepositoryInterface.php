@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace Domain\Repository;
 
 interface PostcodeRepositoryInterface
 {

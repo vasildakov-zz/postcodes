@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Action;
+namespace Application\Action;
 
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
-use App\Repository\PostcodeRepositoryInterface;
+
+use Infrastructure\Repository\Zend\PostcodeRepository;
 
 class LookupFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        if (!$container->has(PostcodeRepositoryInterface::class)) {
+        if (!$container->has(PostcodeRepository::class)) {
             throw new \Exception("Error Processing Request");
         }
 
-        $repository = $container->get(PostcodeRepositoryInterface::class);
+        $repository = $container->get(PostcodeRepository::class);
 
         return new Lookup($repository);
     }

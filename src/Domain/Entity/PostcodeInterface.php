@@ -1,5 +1,5 @@
 <?php
-namespace App\Entity {
+namespace Domain\Entity {
 
     interface PostcodeInterface
     {
@@ -10,6 +10,5 @@ namespace App\Entity {
         public function getLatitude();
 
         public function getLongitude();
-
     }
 }

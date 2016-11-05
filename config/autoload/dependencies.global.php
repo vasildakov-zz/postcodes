@@ -23,7 +23,8 @@ return [
             //Zend\Db\Adapter\AdapterInterface::class => App\Container\Zend\Db\AdapterFactory::class,
             //Zend\Db\Adapter\Sql\Sql::class => App\Container\Zend\Db\SqlFactory::class,
 
-            App\Repository\PostcodeRepositoryInterface::class => App\Repository\Zend\PostcodeRepositoryFactory::class,
+            Infrastructure\Repository\Zend\PostcodeRepository::class =>
+            Infrastructure\Repository\Zend\PostcodeRepositoryFactory::class,
         ],
     ],
 ];

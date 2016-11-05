@@ -2,7 +2,7 @@
 
 return [
    'db' => [
-      'driver'   => 'Pdo_Mysql',
+      'driver'   => 'Mysqli',
       'database' => 'postcodes',
       'username' => 'root',
       'password' => '1',

@@ -1,8 +1,8 @@
 <?php
 
-namespace AppTest\Action;
+namespace ApplicationTest\Action;
 
-use App\Action\PingAction;
+use Application\Action\PingAction;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 
@@ -13,6 +13,7 @@ class PingActionTest extends \PHPUnit_Framework_TestCase
         $pingAction = new PingAction();
         $response = $pingAction(new ServerRequest(['/']), new Response(), function () {
         });
+
         $json = json_decode((string) $response->getBody());
 
         $this->assertTrue($response instanceof Response);

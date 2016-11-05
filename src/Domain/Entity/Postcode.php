@@ -1,5 +1,5 @@
 <?php
-namespace App\Entity;
+namespace Domain\Entity;
 
 /**
  * Class Postcode

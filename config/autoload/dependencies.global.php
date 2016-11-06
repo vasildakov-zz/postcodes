@@ -25,6 +25,9 @@ return [
 
             Infrastructure\Repository\Zend\PostcodeRepository::class =>
             Infrastructure\Repository\Zend\PostcodeRepositoryFactory::class,
+
+            Infrastructure\Repository\Pdo\PostcodeRepository::class =>
+            Infrastructure\Repository\Pdo\PostcodeRepositoryFactory::class,
         ],
     ],
 ];

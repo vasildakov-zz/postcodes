@@ -6,7 +6,8 @@ use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-use Infrastructure\Repository\Zend\PostcodeRepository;
+#use Infrastructure\Repository\Zend\PostcodeRepository;
+use Infrastructure\Repository\Pdo\PostcodeRepository;
 
 class LookupFactory
 {

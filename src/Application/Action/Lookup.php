@@ -32,7 +32,7 @@ class Lookup implements MiddlewareInterface
         
         $postcode = $request->getAttribute('postcode');
         
-        $data = $this->repository->lookup($postcode);
+        $data = $this->repository->findOneByPostcode($postcode);
         
         return new JsonResponse([
             'status' => 200,

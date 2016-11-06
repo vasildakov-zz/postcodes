@@ -2,31 +2,26 @@
 
 namespace Infrastructure\Repository\Zend;
 
-use Zend\Hydrator\HydratorInterface;
-use Zend\Db\Adapter\AdapterInterface;
-use Zend\Db\Adapter\Driver\ResultInterface;
-use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Db\TableGateway\TableGatewayInterface;
 
-use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Select;
-use Zend\Db\Sql\Where;
-use Zend\Db\TableGateway\TableGateway;
-
-use Zend\Hydrator\Reflection as ReflectionHydrator;
-
-use Domain\Entity\Postcode;
 use Domain\Repository\PostcodeRepositoryInterface;
 
 final class PostcodeRepository implements PostcodeRepositoryInterface
 {
     /**
+     * @var TableGatewayInterface
+     */
+    private $tableGateway;
+
+
+    /**
      * Constructor
      *
-     * @param TableGateway
+     * @param TableGatewayInterface
      */
-    public function __construct(TableGateway $gateway)
+    public function __construct(TableGatewayInterface $tableGateway)
     {
-        $this->gateway = $gateway;
+        $this->tableGateway = $tableGateway;
     }
 
 
@@ -34,89 +29,14 @@ final class PostcodeRepository implements PostcodeRepositoryInterface
      * Find one by postcode
      *
      * @param  String   $postcode
-     * @return Postcode $postcode
+     * @return Zend\Db\Sql\ResultSet
      */
-    public function lookup(string $postcode)
+    public function findOneByPostcode(string $postcode)
     {
-        /*
-        adapter = $this->gateway->getAdapter();
-        $sql = new Sql($adapter);
-
-        $select = $sql->select('postcode');
-        $select->columns(['id', 'postcode']);
+        $select = $this->tableGateway->getSql()->select();
+        $select->columns(['id', 'postcode', 'latitude', 'longitude']);
         $select->where(['postcode = ?' => $postcode]);
-        $select->limit(1);
 
-        $statement = $sql->prepareStatementForSqlObject($select);
-        $result    = $statement->execute();
-
-        var_dump($result->current());
-        exit();
-        */
-
-        $resultSet = $this->gateway->select(function (Select $select) use ($postcode) {
-            $select->columns(['id', 'postcode', 'latitude', 'longitude']);
-            $select->where(['postcode = ?' => $postcode]);
-            $select->limit(1);
-        });
-
-        $row = $resultSet->current();
-
-        return (!$row) ? null : $row;
+        return $this->tableGateway->selectWith($select);
     }
-
-
-
-
-    /*public function findUsingSql()
-    {
-        $adapter = $this->gateway->getAdapter();
-
-        $sql = new Sql($adapter);
-
-        $select = $sql->select('postcode');
-        $select->where(['postcode = ?' => $postcode]);
-
-        $statement = $sql->prepareStatementForSqlObject($select);
-        $result    = $statement->execute();
-
-        if (!$result instanceof ResultInterface || !$result->isQueryResult()) {
-            throw new RuntimeException(sprintf(
-                'Failed retrieving postcode with identifier "%s"; unknown database error.',
-                $postcode
-            ));
-        }
-
-        $resultSet = new HydratingResultSet(new ReflectionHydrator, new Postcode);
-        $resultSet->initialize($result);
-        $postcode = $resultSet->current();
-
-        var_dump($postcode);
-        exit();
-    }*/
-
-
-
-    /* public function paginator()
-    {
-        $sql = "
-            SELECT id, postcode 
-            FROM postcode 
-            WHERE postcode LIKE 'TW8%' 
-            ORDER BY postcode ASC 
-            LIMIT 10000"
-        ;
-
-        $connection = $this->gateway->getAdapter()->getDriver()->getConnection();
-        $results = $connection->execute($sql);
-
-        $iteratorAdapter = new \Zend\Paginator\Adapter\Iterator($results);
-        $paginator = new \Zend\Paginator\Paginator($iteratorAdapter);
-
-        $items = $paginator->getIterator();
-        foreach ($items as $item) {
-            var_dump($item);
-        }
-        exit();
-    } */
 }

@@ -43,7 +43,8 @@ class PostcodeRepository extends EntityRepository implements PostcodeRepositoryI
      */
     public function findOneByPostcode(string $postcode)
     {
-        $query = $em->createQuery('SELECT p FROM Domain\Entity\Postcode p WHERE p.postcode = ?1');
+        $dql = 'SELECT p FROM Domain\Entity\Postcode p WHERE p.postcode = ?1';
+        $query = $em->createQuery($dql);
         $query->setParameter(1, $postcode);
 
         return $query->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);

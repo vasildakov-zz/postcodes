@@ -28,7 +28,8 @@
         "zendframework/zend-db": "^2.8",
         "vasildakov/postcode": "^1.1",
         "league/tactician": "^1.0",
-        "zendframework/zend-paginator": "^2.7"
+        "zendframework/zend-paginator": "^2.7",
+        "mtymek/expressive-config-manager": "^0.4.0"
     },
     "require-dev": {
         "zendframework/zend-debug": "^2.5",
@@ -44,14 +45,16 @@
         "psr-4": {
             "Application\\": "src/Application/",
             "Domain\\": "src/Domain/",
-            "Infrastructure\\": "src/Infrastructure/"
+            "Infrastructure\\": "src/Infrastructure/",
+            "Service\\": "src/Service/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "ApplicationTest\\": "test/ApplicationTest/",
             "DomainTest\\": "test/DomainTest/",
-            "InfrastructureTest\\": "test/InfrastructureTest/"
+            "InfrastructureTest\\": "test/InfrastructureTest/",
+            "ServiceTest\\": "test/ServiceTest/"
         }
     },
     "scripts": {

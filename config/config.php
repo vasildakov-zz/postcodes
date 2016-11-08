@@ -7,9 +7,9 @@ use Zend\Expressive\ConfigManager\ConfigManager;
 use Zend\Expressive\ConfigManager\PhpFileProvider;
 
 $configManager = new ConfigManager([
+    Application\ConfigProvider::class,
     Domain\ConfigProvider::class,
     Infrastructure\ConfigProvider::class,
-    Service\ConfigProvider::class,
     new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
 ]);
 
